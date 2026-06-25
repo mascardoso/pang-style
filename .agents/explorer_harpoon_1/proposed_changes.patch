@@ -1,0 +1,45 @@
+diff --git a/src/GameCanvas.jsx b/src/GameCanvas.jsx
+index xxxxxxx..xxxxxxx 100644
+--- a/src/GameCanvas.jsx
++++ b/src/GameCanvas.jsx
+@@ -240,7 +240,7 @@ export default function GameCanvas({
+         state.ropes.push({
+           x: p.x + p.width / 2,
+-          y: floorY - 5,
++          y: p.y + p.height - 5,
+           anchored: false,
+           anchorTimer: 0,
+-          startY: p.y + p.height / 2, // Track which platform level it shot from
++          startY: p.y + p.height - 5, // Track which platform level it shot from
+         });
+       }
+     };
+@@ -636,7 +636,7 @@ export default function GameCanvas({
+         for (let bIdx = 0; bIdx < state.bubbles.length; bIdx++) {
+           const b = state.bubbles[bIdx];
+           if (Math.abs(b.x - rp.x) <= b.radius) {
+-            if (b.y + b.radius >= rp.y && b.y - b.radius <= floorY) {
++            if (b.y + b.radius >= rp.y && b.y - b.radius <= rp.startY) {
+               hitIdx = bIdx;
+               break;
+             }
+@@ -1339,7 +1339,7 @@ export default function GameCanvas({
+         ctx.lineWidth = 3.5;
+         ctx.setLineDash([5, 5]);
+         ctx.beginPath();
+         ctx.moveTo(r.x, r.y);
+-        ctx.lineTo(r.x, floorY);
++        ctx.lineTo(r.x, r.startY);
+         ctx.stroke();
+ 
+         // Inner hot core line
+@@ -1348,7 +1348,7 @@ export default function GameCanvas({
+         ctx.lineWidth = 1.0;
+         ctx.setLineDash([]);
+         ctx.beginPath();
+         ctx.moveTo(r.x, r.y + 4);
+-        ctx.lineTo(r.x, floorY);
++        ctx.lineTo(r.x, r.startY);
+         ctx.stroke();
+ 
+         // Glowing Harpoon / Double Anchor Tip at the top
