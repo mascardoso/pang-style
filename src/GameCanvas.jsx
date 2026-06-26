@@ -68,18 +68,21 @@ export default function GameCanvas({
   // Load image assets and key them
   useEffect(() => {
     const state = gameStateRef.current;
+    const base = import.meta.env.BASE_URL || '/';
     
-    const loadBg = (src, bgIdx) => {
+    const loadBg = (fileName, bgIdx) => {
       const img = new Image();
       img.onload = () => {
         state.backgrounds[bgIdx] = img;
       };
-      img.src = src;
+      // Ensure we don't end up with double slashes if base ends with a slash
+      const cleanBase = base.endsWith('/') ? base : base + '/';
+      img.src = `${cleanBase}${fileName}`;
     };
 
-    loadBg('/background_coex.jpg', 1);
-    loadBg('/background_myeongdong.jpg', 2);
-    loadBg('/background_nseoul.jpg', 3);
+    loadBg('background_coex.jpg', 1);
+    loadBg('background_myeongdong.jpg', 2);
+    loadBg('background_nseoul.jpg', 3);
   }, []);
 
   // Initialize level platforms, ladders, player and bubbles

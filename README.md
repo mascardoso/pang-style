@@ -1,5 +1,7 @@
 # K-Stage Odyssey 🎵👾
 
+[![Play Game](https://img.shields.io/badge/Play_Live-K--Stage_Odyssey-FF1493?style=for-the-badge&logo=retroarch&logoColor=white)](https://mascardoso.github.io/pang-style/)
+
 **K-Stage Odyssey** is an HTML5 retro-inspired arcade action game built with React and HTML5 Canvas. It features classic bubble-splitting gameplay mechanics reminiscent of the retro game *Pang* (Buster Bros), styled with an upbeat stage-light aesthetic, dynamic 8-bit synthesized soundtracks, and stocky 16-bit chibi characters.
 
 ---
