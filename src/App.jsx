@@ -59,26 +59,26 @@ export default function App() {
   useEffect(() => {
     audio.setMuted(musicMuted);
 
-    const startBgmSafely = () => {
-      if (gameState !== 'gameover' && !musicMuted) {
-        audio.startBGM();
-      } else {
-        audio.stopBGM();
-      }
-    };
-
-    // Run immediately (will succeed if audio context is already allowed/resumed)
-    startBgmSafely();
-
-    // Listen for user interactions to resume the audio context if blocked
     const resumeOnInteraction = () => {
       if (gameState !== 'gameover' && !musicMuted) {
         audio.startBGM();
       }
+      // Remove listeners once audio is started
+      window.removeEventListener('click', resumeOnInteraction);
+      window.removeEventListener('keydown', resumeOnInteraction);
     };
 
-    window.addEventListener('click', resumeOnInteraction);
-    window.addEventListener('keydown', resumeOnInteraction);
+    if (gameState !== 'gameover' && !musicMuted) {
+      // If we already have a running context, start immediately, otherwise wait for interaction
+      if (audio.ctx && audio.ctx.state === 'running') {
+        audio.startBGM();
+      } else {
+        window.addEventListener('click', resumeOnInteraction);
+        window.addEventListener('keydown', resumeOnInteraction);
+      }
+    } else {
+      audio.stopBGM();
+    }
 
     return () => {
       audio.stopBGM();
