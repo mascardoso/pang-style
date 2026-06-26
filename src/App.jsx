@@ -3,9 +3,6 @@ import GameCanvas from './GameCanvas';
 import './App.css';
 import { audio } from './audio';
 
-const base = import.meta.env.BASE_URL || '/';
-const cleanBase = base.endsWith('/') ? base : base + '/';
-
 // Character profiles data
 const idolProfiles = {
   rhea: {
@@ -14,7 +11,6 @@ const idolProfiles = {
     desc: 'Vibrant pop idol with sparkling vocal energy and cute pink twin tails.',
     stats: { Speed: '8/10', Reaction: '9/10', Gear: 'Standard' },
     equip: ['Vocal Mic', 'Pink Fan', 'Lightstick'],
-    portrait: `${cleanBase}character_rhea.jpg`,
   },
   zara: {
     name: 'Zara',
@@ -22,7 +18,6 @@ const idolProfiles = {
     desc: 'Fast reflexes, street-dance apparel, and high energy beats.',
     stats: { Speed: '9/10', Reaction: '7/10', Gear: 'Speedy' },
     equip: ['Snapback', 'Headphones', 'Retro Cassette'],
-    portrait: `${cleanBase}character_zara.jpg`,
   },
   mina: {
     name: 'Mina',
@@ -30,7 +25,6 @@ const idolProfiles = {
     desc: 'Futuristic neon-glasses tech rapper. Fast flow and precise style.',
     stats: { Speed: '7/10', Reaction: '8/10', Gear: 'Cyber Tech' },
     equip: ['Neon Visor', 'Cyber Boots', 'Digital Keytar'],
-    portrait: `${cleanBase}character_mina.jpg`,
   },
 };
 
