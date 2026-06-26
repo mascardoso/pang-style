@@ -1441,20 +1441,27 @@ export default function GameCanvas({
         drawProceduralPlayer(ctx, p, character, state);
       }
 
-      // 7. Draw Falling Power-Ups
       for (let i = 0; i < state.powerups.length; i++) {
         const item = state.powerups[i];
         
         ctx.save();
-        ctx.fillStyle = '#121830';
-        ctx.strokeStyle = '#8b5cf6';
-        ctx.lineWidth = 1.5;
+        // Glassy bubble outer shell
+        ctx.fillStyle = 'rgba(230, 245, 255, 0.18)';
         ctx.beginPath();
         ctx.arc(item.x, item.y, 14, 0, Math.PI * 2);
         ctx.fill();
-        ctx.stroke();
         
-        ctx.shadowBlur = 8;
+        ctx.strokeStyle = 'rgba(220, 240, 255, 0.85)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Shiny bubble reflection highlight
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.beginPath();
+        ctx.arc(item.x - 4, item.y - 4, 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.shadowBlur = 10;
         
         if (item.type === 'double_hook') {
           ctx.shadowColor = '#00f0ff';

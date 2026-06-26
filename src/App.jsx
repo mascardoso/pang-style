@@ -58,13 +58,32 @@ export default function App() {
 
   useEffect(() => {
     audio.setMuted(musicMuted);
-    if (gameState === 'playing' && !musicMuted) {
-      audio.startBGM();
-    } else {
-      audio.stopBGM();
-    }
+
+    const startBgmSafely = () => {
+      if (gameState !== 'gameover' && !musicMuted) {
+        audio.startBGM();
+      } else {
+        audio.stopBGM();
+      }
+    };
+
+    // Run immediately (will succeed if audio context is already allowed/resumed)
+    startBgmSafely();
+
+    // Listen for user interactions to resume the audio context if blocked
+    const resumeOnInteraction = () => {
+      if (gameState !== 'gameover' && !musicMuted) {
+        audio.startBGM();
+      }
+    };
+
+    window.addEventListener('click', resumeOnInteraction);
+    window.addEventListener('keydown', resumeOnInteraction);
+
     return () => {
       audio.stopBGM();
+      window.removeEventListener('click', resumeOnInteraction);
+      window.removeEventListener('keydown', resumeOnInteraction);
     };
   }, [gameState, musicMuted]);
 
@@ -360,28 +379,28 @@ export default function App() {
         <div className="card-header">BOOSTS GUIDE</div>
         <ul className="boosts-guide-list">
           <li className="boost-guide-item">
-            <span className={`boost-badge ${doubleHookActive ? 'active' : ''}`}>♊</span>
+            <span className={`boost-badge double-hook ${doubleHookActive ? 'active' : ''}`}>♊</span>
             <div className="boost-guide-desc">
               <div className="boost-name">Double Hook</div>
               <div className="boost-detail">Fire two hooks concurrently</div>
             </div>
           </li>
           <li className="boost-guide-item">
-            <span className={`boost-badge ${stickyHookActive ? 'active' : ''}`}>⚓</span>
+            <span className={`boost-badge sticky-hook ${stickyHookActive ? 'active' : ''}`}>⚓</span>
             <div className="boost-guide-desc">
               <div className="boost-name">Sticky Anchor</div>
               <div className="boost-detail">Hook latches to top ceilings</div>
             </div>
           </li>
           <li className="boost-guide-item">
-            <span className={`boost-badge ${shieldActive ? 'active' : ''}`}>🛡️</span>
+            <span className={`boost-badge shield ${shieldActive ? 'active' : ''}`}>🛡️</span>
             <div className="boost-guide-desc">
               <div className="boost-name">Force Shield</div>
               <div className="boost-detail">Absorbs one bubble crash</div>
             </div>
           </li>
           <li className="boost-guide-item">
-            <span className={`boost-badge ${timeFreezeActive ? 'active' : ''}`}>⏳</span>
+            <span className={`boost-badge time-freeze ${timeFreezeActive ? 'active' : ''}`}>⏳</span>
             <div className="boost-guide-desc">
               <div className="boost-name">Time Stop</div>
               <div className="boost-detail">Freezes bubbles momentarily</div>
